@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+{% for restaurant in res %}
+    <main class="container">
+        <div class="col p-2 d-flex justify-content-center">
+            <div class="card shadow" style="width: 90%;" >
+                <img src="..." class="card-img-top" alt="{{ restaurant.name }}">
+                <div class="card-body">
+                <h5 class="card-title">{{ restaurant.tags }}</h5>
+                <p class="card-text">rating {{ restaurant.rating }} <strong>{{ restaurant.distance }}km</strong></p>
+                <a href="{% url 'restaurant' restaurant.id %}" class="btn btn-secondary">{{ restaurant.name }}</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endfor %}
+
+{% endblock content %}

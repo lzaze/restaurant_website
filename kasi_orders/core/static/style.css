@@ -1,0 +1,23 @@
+body {
+    background-color: #eeecec;
+    margin-top: 5rem;
+}
+
+
+.bar {
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: rgb(211, 98, 6);
+}
+
+.navbar-col {
+    color: rgb(211, 98, 6);
+}
+
+.style {
+    background-color: cadetblue;
+    color: tomato;
+}
