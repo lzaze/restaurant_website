@@ -24,7 +24,16 @@ body {
 
 
 /* floating button */
-.float{
+a {
+    text-decoration: none;
+    color: #eeecec;
+}
+
+a:hover {
+    color: aqua;
+}
+
+.float {
 	position:fixed;
 	width:60px;
 	height:60px;
@@ -37,6 +46,12 @@ body {
 	box-shadow: 2px 2px 3px #999;
 }
 
-.my-float{
+.my-float {
 	margin-top:22px;
+}
+
+.price {
+    display: flex;
+    justify-content: center;
+	align-items: center;
 }
