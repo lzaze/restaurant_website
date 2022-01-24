@@ -4,14 +4,14 @@ body {
 }
 
 
-.bar {
-    overflow: hidden;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: #333;
-    color: rgb(211, 98, 6);
-}
+/*.bar {*/
+/*    overflow: hidden;*/
+/*    position: fixed;*/
+/*    bottom: 0;*/
+/*    width: 100%;*/
+/*    background-color: #333;*/
+/*    color: rgb(211, 98, 6);*/
+/*}*/
 
 .navbar-col {
     color: rgb(211, 98, 6);
@@ -20,4 +20,23 @@ body {
 .style {
     background-color: cadetblue;
     color: tomato;
+}
+
+
+/* floating button */
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color: cadetblue;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+
+.my-float{
+	margin-top:22px;
 }

@@ -8,7 +8,7 @@
                 <div class="card-body">
                 <h5 class="card-title">{{ restaurant.tags }}</h5>
                 <p class="card-text">rating {{ restaurant.rating }} <strong>{{ restaurant.distance }}km</strong></p>
-                <a href="{% url 'restaurant' restaurant.id %}" class="btn btn-secondary">{{ restaurant.name }}</a>
+                <a href="{% url 'restaurant' restaurant.id %}" class="btn btn-info">{{ restaurant.name }}</a>
                 </div>
             </div>
         </div>
