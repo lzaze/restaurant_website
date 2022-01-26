@@ -10,10 +10,30 @@
 {#    <link rel="stylesheet" href="static/style.css">#}
 {#    <script src="jquerry-2.1.4.js"></script>#}
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script type="text/javascript">
+        var user = '{{ request.user }}'
+
+        function getToken(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getToken('csrftoken');
+    </script>
     <title>KasiOrders</title>
 </head>
-<body onload="getLocation();">
+<body {# onload="getLocation();" #} >
   <header>
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark style">
       <div class="container-fluid">
@@ -56,20 +76,22 @@
     
   </footer>
 
-{#  <script>#}
-{#    function getLocation() {#}
-{#      if (navigator.geolocation) {#}
-{#        navigator.geolocation.getCurrentPosition(function(position){#}
-{#          console.log(position)#}
-{#          $.get("http://api.positionstack.com/v1/forward?access_key=d9c1d9e932fdec3ad09b841d091fde15&query="+position.coords.latitude+","+position.coords.longitude, function(data){#}
-{#            console.log(data)#}
-{#          });#}
-{#        })#}
-{#      } else {#}
-{#        x.innerHTML = "Geolocation is not supported by this browser.";#}
-{#      }#}
-{#    }#}
-{#  </script>#}
+  <script>
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position){
+          console.log(position)
+          $.get("http://api.positionstack.com/v1/forward?access_key=d9c1d9e932fdec3ad09b841d091fde15&query="+position.coords.latitude+","+position.coords.longitude, function(data){
+            console.log(data)
+          });
+        })
+      } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+    }
+  </script>
+
+  <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
     
 </body>
 </html>
