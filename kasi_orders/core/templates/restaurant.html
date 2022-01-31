@@ -14,5 +14,8 @@
             </div>
         </div>
     {% endfor %}
+        <a href="{% url 'cart' %}" class="float">
+          <i class="fa my-float price">{{ cartItems }}</i>
+        </a>
 
 {% endblock content %}

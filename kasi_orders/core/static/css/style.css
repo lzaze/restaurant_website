@@ -30,7 +30,7 @@ a {
 }
 
 a:hover {
-    color: aqua;
+    color: white;
 }
 
 .float {
@@ -47,7 +47,7 @@ a:hover {
 }
 
 .my-float {
-	margin-top:22px;
+	margin-top:16px;
 }
 
 .price {

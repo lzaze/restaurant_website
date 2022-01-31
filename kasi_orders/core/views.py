@@ -7,25 +7,50 @@ from .models import Food, Restaurant, Order, OrderItem
 
 def home_view(request):
     context = {
-        'res': Restaurant.objects.all()
+        'res': Restaurant.objects.all(),
     }
     return render(request, "home.html", context)
 
 
 def restaurant_view(request, pk):
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_total
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        cartItems = order['get_cart_items']
+
     context = {
-        'menu': Food.objects.filter(restaurant_id=pk)
+        'menu': Food.objects.filter(restaurant_id=pk),
+        'cartItems': cartItems
     }
     return render(request, "restaurant.html", context)
+
+
+def cart_view(request):
+
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+
+    context = {
+        'items': items,
+        'order': order,
+    }
+    return render(request, "cart.html", context)
 
 
 def update_item(request):
     data = json.loads(request.body)
     productId = data['productId']
     action = data['action']
-
-    print('Action:', action)
-    print('Product Id:', productId)
 
     customer = request.user.customer
     product = Food.objects.get(id=productId)
