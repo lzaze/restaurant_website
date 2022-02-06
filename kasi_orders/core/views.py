@@ -6,6 +6,7 @@ from .models import Food, Restaurant, Order, OrderItem
 
 
 def home_view(request):
+    """Home view"""
     context = {
         'res': Restaurant.objects.all(),
     }
@@ -13,6 +14,7 @@ def home_view(request):
 
 
 def restaurant_view(request, pk):
+    """A view for restaurants"""
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
@@ -31,6 +33,7 @@ def restaurant_view(request, pk):
 
 
 def cart_view(request):
+    """Cart view"""
 
     if request.user.is_authenticated:
         customer = request.user.customer
@@ -48,6 +51,7 @@ def cart_view(request):
 
 
 def update_item(request):
+    """Updates cart items"""
     data = json.loads(request.body)
     productId = data['productId']
     action = data['action']
