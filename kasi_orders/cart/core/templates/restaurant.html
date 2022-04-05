@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    {% for item in menu %}
+        <div class="col p-2 d-flex justify-content-center">
+            <div class="card" style="width: 90%;">
+                <img src="{% static 'img/400x200.png' %}" class="card-img-top" alt="Food image">
+                <div class="card-body">
+                <h5 class="card-title" style="color: rgb(211, 98, 6)">{{ item.name }}</h5>
+                <p class="card-text" style="color: rgb(211, 98, 6)">{{ item.price }}</p>
+                <button data-product="{{ item.id }}" data-action="add" class="btn btn-sm update-cart" style="background-color: rgb(211, 98, 6)">
+                    Add to cart
+                </button>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+        <a href="{% url 'cart' %}" class="float">
+          <i class="fa my-float price">{{ cartItems }}</i>
+        </a>
+
+{% endblock content %}

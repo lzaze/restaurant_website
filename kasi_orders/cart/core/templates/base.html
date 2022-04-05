@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script type="text/javascript">
+        var user = '{{ request.user }}'
+        function getToken(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getToken('csrftoken');
+
+        function getCookie(name) {
+            // Split cookie string and get all individual name=value pairs in an array
+            var cookieArr = document.cookie.split(";");
+
+            // Loop through the array elements
+            for (var i = 0; i < cookieArr.length; i++) {
+                var cookiePair = cookieArr[i].split("=");
+                /**
+                 * Removing whitespace at the beginning of the cookie name and compare it with
+                 * the given string
+                 */
+                if (name == cookiePair[0].trim()) {
+                    //Decode the cookie value and return
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+            //Return null if not found
+            return null
+        }
+        var cart = JSON.parse(getCookie('cart'))
+        if (cart == undefined) {
+            cart = {}
+            console.log('Cart was created');
+            document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/";
+        }
+        console.log('CArt: ', cart)
+    </script>
+    <title>KasiOrders</title>
+</head>
+<body {# onload="getLocation();" #} >
+  <header>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark style">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home-page' %}">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            {% if user.is_authenticated %}
+                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Order History</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Card Payments</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link" href="#">Help</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  {% if messages %}
+      {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+  {% endif %}
+  {% block content %}
+  {% endblock %}
+
+  <footer>
+
+  </footer>
+
+  <script>
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position){
+          console.log(position)
+          $.get("http://api.positionstack.com/v1/forward?access_key=d9c1d9e932fdec3ad09b841d091fde15&query="+position.coords.latitude+","+position.coords.longitude, function(data){
+            console.log(data)
+          });
+        })
+      } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+    }
+  </script>
+
+  <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+    
+</body>
+</html>

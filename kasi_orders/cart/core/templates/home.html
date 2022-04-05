@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% for restaurant in res %}
+    <main class="container">
+        <div class="col p-2 d-flex justify-content-center">
+            <div class="card shadow" style="width: 90%;" >
+                <img src="{% static 'img/300x300.png' %}" class="card-img-top" alt="{{ restaurant.name }}">
+                <div class="card-body">
+                <h5 class="card-title" style="color: rgb(211, 98, 6)">{{ restaurant.tags }}</h5>
+                <p class="card-text" style="color: rgb(211, 98, 6)">rating {{ restaurant.rating }} <strong>{{ restaurant.distance }}km</strong></p>
+                <a href="{% url 'restaurant' restaurant.id %}" class="btn btn-lg" style="background-color:  rgb(211, 98, 6)">{{ restaurant.name }}</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endfor %}
+
+{% endblock content %}
